@@ -1152,7 +1152,9 @@ jobs:
           toolchain: ${{ env.rust_nightly }}
       - uses: Swatinem/rust-cache@v2
       - name: Install cargo-fuzz
-        run: cargo install cargo-fuzz
+        # Pin an older cargo-fuzz: latest deps need a newer rustc than the
+        # nightly this release branch pins (nightly-2025-01-25 / 1.86).
+        run: cargo install cargo-fuzz --version 0.12.0 --locked
       - name: Check /tokio/
         run: cargo fuzz check --all-features
         working-directory: tokio
