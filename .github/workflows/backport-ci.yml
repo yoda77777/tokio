@@ -1,0 +1,15 @@
+name: Backport CI
+
+on:
+  push:
+    branches: ['fork-ci/**']
+  pull_request:
+
+jobs:
+  tokio-stream-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Test tokio-stream (includes size_hint_overflow)
+        run: cargo test -p tokio-stream --all-features size_hint
